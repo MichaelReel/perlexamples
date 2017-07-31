@@ -24,25 +24,29 @@ print "\$formatted_date  = $formatted_date  \n";
 print "-------------------------------------------\n";
 
 my $start_date = localtime();
-my $timemod = { days => 0, hours => 0, minutes => 5, seconds => -1 };
+my $timemod = { days => 0, hours => -1, minutes => 5, seconds => -1 };
 my $adjusted_time = adjust_time($start_date, $timemod);
 
 print "\$start_date      = $start_date      \n";
 print "\$adjusted_time   = $adjusted_time   \n";
 print Dumper($timemod);
 
+# Test that adjust_time can handle not having a moding reference
+my $bork = adjust_time($start_date);
+print "\$bork            = $bork            \n";
+
 sub adjust_time {
     my $input_time = shift;
-    my %timemod = %{shift()};
+    my $time_ref = shift;
 
     my $seconds = 0;
-    $seconds += $timemod{'seconds'}                if defined $timemod{'seconds'};
-    $seconds += ($timemod{'minutes'} * ONE_MINUTE) if defined $timemod{'minutes'};
-    $seconds += ($timemod{'hours'} * ONE_HOUR)     if defined $timemod{'hours'};
-    $seconds += ($timemod{'days'} * ONE_DAY)       if defined $timemod{'days'};
-    $seconds += ($timemod{'weeks'} * ONE_WEEK)     if defined $timemod{'weeks'};
-    $seconds += ($timemod{'months'} * ONE_MONTH)   if defined $timemod{'months'};
-    $seconds += ($timemod{'years'} * ONE_YEAR)     if defined $timemod{'years'};
+    $seconds +=  $time_ref->{'seconds'}               if defined $time_ref->{'seconds'};
+    $seconds += ($time_ref->{'minutes'} * ONE_MINUTE) if defined $time_ref->{'minutes'};
+    $seconds += ($time_ref->{'hours'}   * ONE_HOUR)   if defined $time_ref->{'hours'};
+    $seconds += ($time_ref->{'days'}    * ONE_DAY)    if defined $time_ref->{'days'};
+    $seconds += ($time_ref->{'weeks'}   * ONE_WEEK)   if defined $time_ref->{'weeks'};
+    $seconds += ($time_ref->{'months'}  * ONE_MONTH)  if defined $time_ref->{'months'};
+    $seconds += ($time_ref->{'years'}   * ONE_YEAR)   if defined $time_ref->{'years'};
 
     return $input_time + $seconds;
 }
