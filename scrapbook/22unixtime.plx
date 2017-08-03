@@ -35,6 +35,15 @@ print Dumper($timemod);
 my $bork = adjust_time($start_date);
 print "\$bork            = $bork            \n";
 
+# Test where values are actually strings rather than numbers
+my $timestr = "-01:05:-01";
+($timemod->{'hours'}, $timemod->{'minutes'}, $timemod->{'seconds'}) = split /:/, $timestr;
+$adjusted_time = adjust_time($start_date, $timemod);
+
+print "\$start_date      = $start_date      \n";
+print "\$adjusted_time   = $adjusted_time   \n";
+print Dumper($timemod);
+
 sub adjust_time {
     my $input_time = shift;
     my $time_ref = shift;
@@ -42,11 +51,11 @@ sub adjust_time {
     my $seconds = 0;
     $seconds +=  $time_ref->{'seconds'}               if defined $time_ref->{'seconds'};
     $seconds += ($time_ref->{'minutes'} * ONE_MINUTE) if defined $time_ref->{'minutes'};
-    $seconds += ($time_ref->{'hours'}   * ONE_HOUR)   if defined $time_ref->{'hours'};
-    $seconds += ($time_ref->{'days'}    * ONE_DAY)    if defined $time_ref->{'days'};
-    $seconds += ($time_ref->{'weeks'}   * ONE_WEEK)   if defined $time_ref->{'weeks'};
-    $seconds += ($time_ref->{'months'}  * ONE_MONTH)  if defined $time_ref->{'months'};
-    $seconds += ($time_ref->{'years'}   * ONE_YEAR)   if defined $time_ref->{'years'};
+    $seconds += ($time_ref->{'hours'  } * ONE_HOUR  ) if defined $time_ref->{'hours'  };
+    $seconds += ($time_ref->{'days'   } * ONE_DAY   ) if defined $time_ref->{'days'   };
+    $seconds += ($time_ref->{'weeks'  } * ONE_WEEK  ) if defined $time_ref->{'weeks'  };
+    $seconds += ($time_ref->{'months' } * ONE_MONTH ) if defined $time_ref->{'months' };
+    $seconds += ($time_ref->{'years'  } * ONE_YEAR  ) if defined $time_ref->{'years'  };
 
     return $input_time + $seconds;
 }
