@@ -12,3 +12,12 @@ if ($test1 =~ / dog/) {
 if ($test2 =~ / dog/) {
     print "This dog's at work.\n";
 }
+
+# Aside - match negation
+if ($test1 !~ / dog/) {
+    print "This dog is not at home.\n";
+}
+
+if ($test2 !~ / dog/) {
+    print "This dog is not at work.\n";
+}
