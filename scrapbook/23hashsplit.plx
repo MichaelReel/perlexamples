@@ -9,17 +9,17 @@ my %timehsh;
 
 ($timehsh{'hours'}, $timehsh{'minutes'}, $timehsh{'seconds'}) = split /:/, $timestr;
 
-print $timestr, "\n";
-print Dumper(\%timehsh);
+print "timestr ", $timestr, "\n";
+print "timehsh ", Dumper(\%timehsh);
 
 %timehsh = ();
 @timehsh{ qw(hours minutes seconds) } = split /:/, $borkstr;
 
-print $borkstr, "\n";
-print Dumper(\%timehsh);
+print "borkstr ", $borkstr, "\n";
+print "timehsh ", Dumper(\%timehsh);
 
 my $otherhsh = {};
 @$otherhsh{ qw(hours minutes seconds) } = split /:/, $timestr;
 
-print $timestr, "\n";
-print Dumper($otherhsh);
+print "timestr ", $timestr, "\n";
+print "otherhsh ", Dumper($otherhsh);
